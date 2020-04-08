@@ -7,7 +7,14 @@ const entrySchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Email is invalid');
+            }
+        }
     },
     country: {
         type: String,
@@ -17,6 +24,8 @@ const entrySchema = new mongoose.Schema({
         type: String,
         required: true
     }
+}, {
+    timestamps: true
 });
 
 const Entries = mongoose.model('entries', entrySchema);
