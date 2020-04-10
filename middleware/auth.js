@@ -4,7 +4,7 @@ const Users = require('../models/users');
 const auth = async (req, res, next) => {
     try{
         const token = req.header('Authorization').replace('Beater ', '');
-        const decode = jwt.verify(token, 'authorized');
+        const decoded = jwt.verify(token, 'authorized');
         const user = Users.findOne({ _id: decoded._id, 'tokens.toke': token});
 
         if(!user){
